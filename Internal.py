@@ -1,5 +1,7 @@
 import sqlite3
 db = sqlite3.connect('internal.db')
+
+
 def print_all():
     cursor = db.cursor()
     sql = 'SELECT * FROM Cat;'
@@ -21,10 +23,24 @@ def print_legend_rare():
 
 
 def print_against():
-    against = input("What type is your cat good against? ")
+    against = input("What type is your cat good against? ").title()
     cursor = db.cursor()
     sql = 'SELECT * FROM Cat WHERE Cat_Against = ?;'
     cursor.execute(sql, (against,))
+    result = cursor.fetchall()
+    print(f"The type is {against}")
+    for Cat in result:
+        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
+    db.close()
+
+
+def this_does_everything():
+    Rarity = input("What rarity is your cat?").title()
+    against = input("What type is your cat good against? ").title()
+    Banner = input("What banner is your cat from?").title()
+    cursor = db.cursor()
+    sql = 'SELECT * FROM Cat WHERE Cat_Rarity = ? AND Cat_against = ? AND Banner = ?;'
+    cursor.execute(sql, (Rarity, against, Banner))
     result = cursor.fetchall()
     print(f"The type is {against}")
     for Cat in result:
