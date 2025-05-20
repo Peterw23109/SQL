@@ -28,7 +28,6 @@ def print_against():
     sql = 'SELECT * FROM Cat WHERE Cat_Against = ?;'
     cursor.execute(sql, (against,))
     result = cursor.fetchall()
-    print(f"The type is {against}")
     for Cat in result:
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
@@ -53,8 +52,9 @@ while True:
     print("1. Display all data")
     print("2. Display Legend Rare cats")
     print("3. Certin type")
-    print("4. Exit")
-    user_input = input("Enter a number (1-4): ")
+    print("4. This does everything")
+    print("5. Exit")
+    user_input = input("Enter a number (1-5): ")
 
     if user_input == "1":
         print_all()
@@ -63,7 +63,10 @@ while True:
     elif user_input == "3":
         print_against()
     elif user_input == "4":
+        this_does_everything()
+    elif user_input == "5":
         print("Exiting the program.")
         break
+    
     else:
         print("That was not an option.")
