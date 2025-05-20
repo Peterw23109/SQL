@@ -1,7 +1,7 @@
 import sqlite3
 db = sqlite3.connect('internal.db')
 
-
+#Function that print every data
 def print_all():
     cursor = db.cursor()
     sql = 'SELECT * FROM Cat;'
@@ -11,7 +11,7 @@ def print_all():
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
 
-
+#Function that print Legend Rare only
 def print_legend_rare():
     cursor = db.cursor()
     sql = 'SELECT * FROM Cat WHERE Cat_Rarity = "Legend Rare";'
@@ -21,7 +21,7 @@ def print_legend_rare():
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
 
-
+#Function that ask the user and display the type 
 def print_against():
     against = input("What type is your cat good against? ").title()
     cursor = db.cursor()
@@ -32,22 +32,22 @@ def print_against():
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
 
-
+#Fuction that ask the user rarity, against and banner.
 def this_does_everything():
-    Rarity = input("What rarity is your cat?").title()
+    Rarity = input("What rarity is your cat? ").title()
     against = input("What type is your cat good against? ").title()
-    Banner = input("What banner is your cat from?").title()
+    Banner = input("What banner is your cat from? ").title()
     cursor = db.cursor()
     sql = 'SELECT * FROM Cat WHERE Cat_Rarity = ? AND Cat_against = ? AND Banner = ?;'
     cursor.execute(sql, (Rarity, against, Banner))
     result = cursor.fetchall()
-    print(f"The type is {against}")
     for Cat in result:
-        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
+        print(f"\n{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
 
 
 while True:
+    #A menu that display what to do
     print("\nWhat would you like to do?")
     print("1. Display all data")
     print("2. Display Legend Rare cats")
@@ -67,6 +67,5 @@ while True:
     elif user_input == "5":
         print("Exiting the program.")
         break
-    
     else:
         print("That was not an option.")
