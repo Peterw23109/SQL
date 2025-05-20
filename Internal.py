@@ -2,11 +2,18 @@ import sqlite3
 db = sqlite3.connect('internal.db')
 
 #Function that print every data
+
+def print_header():
+    print(f"\n{'Name':<25}{'Type':<15}{'Rarity':<15}{'AOE attack':<15}{'Single Attack':<15}{'Banner':<15}")
+    print("-" * 100)
+
+
 def print_all():
     cursor = db.cursor()
     sql = 'SELECT * FROM Cat;'
     cursor.execute(sql)
     result = cursor.fetchall()
+    print_header()
     for Cat in result:
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
@@ -17,6 +24,7 @@ def print_legend_rare():
     sql = 'SELECT * FROM Cat WHERE Cat_Rarity = "Legend Rare";'
     cursor.execute(sql)
     result = cursor.fetchall()
+    print_header()
     for Cat in result:
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
@@ -28,6 +36,7 @@ def print_against():
     sql = 'SELECT * FROM Cat WHERE Cat_Against = ?;'
     cursor.execute(sql, (against,))
     result = cursor.fetchall()
+    print_header()
     for Cat in result:
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
@@ -41,6 +50,7 @@ def this_does_everything():
     sql = 'SELECT * FROM Cat WHERE Cat_Rarity = ? AND Cat_against = ? AND Banner = ?;'
     cursor.execute(sql, (Rarity, against, Banner))
     result = cursor.fetchall()
+    print_header()
     for Cat in result:
         print(f"\n{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
