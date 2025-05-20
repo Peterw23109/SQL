@@ -6,19 +6,48 @@ def print_all():
     cursor.execute(sql)
     result = cursor.fetchall()
     for Cat in result:
-        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[4]:<15}{Cat[5]:<15}")
+        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
+
+
 def print_legend_rare():
     cursor = db.cursor()
     sql = 'SELECT * FROM Cat WHERE Cat_Rarity = "Legend Rare";'
     cursor.execute(sql)
     result = cursor.fetchall()
     for Cat in result:
-        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[4]:<15}{Cat[5]:<15}")
+        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
-while true:
-    print("1: Print all data")
-    print("2: Print legend rare only")
-    print("3: exit")
-    user_input = input("What would you like to do")
-    
+
+
+def print_against():
+    against = input("What type is your cat good against? ")
+    cursor = db.cursor()
+    sql = 'SELECT * FROM Cat WHERE Cat_Against = ?;'
+    cursor.execute(sql, (against,))
+    result = cursor.fetchall()
+    print(f"The type is {against}")
+    for Cat in result:
+        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
+    db.close()
+
+
+while True:
+    print("\nWhat would you like to do?")
+    print("1. Display all data")
+    print("2. Display Legend Rare cats")
+    print("3. Certin type")
+    print("4. Exit")
+    user_input = input("Enter a number (1-4): ")
+
+    if user_input == "1":
+        print_all()
+    elif user_input == "2":
+        print_legend_rare()
+    elif user_input == "3":
+        print_against()
+    elif user_input == "4":
+        print("Exiting the program.")
+        break
+    else:
+        print("That was not an option.")
