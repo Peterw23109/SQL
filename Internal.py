@@ -1,7 +1,10 @@
 import sqlite3
 db = sqlite3.connect('internal.db')
+Trait = ["Red", "Alien", "Black", "Traitless", "Non-Metal", "Floating", "Angel", "All", "Metal", "Zombies", "Aku"]
+Rarity_Type = ["Legend Rare", "Uber Rare"]
 
 #Function that print every data
+
 
 def print_header():
     print(f"\n{'Name':<25}{'Type':<15}{'Rarity':<15}{'AOE attack':<15}{'Single Attack':<15}{'Banner':<15}")
@@ -19,6 +22,7 @@ def print_all():
     db.close()
 
 #Function that print Legend Rare only
+"""
 def print_legend_rare():
     cursor = db.cursor()
     sql = 'SELECT * FROM Cat WHERE Cat_Rarity = "Legend Rare";'
@@ -28,8 +32,9 @@ def print_legend_rare():
     for Cat in result:
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
-
+"""
 #Function that ask the user and display the type 
+"""r
 def print_against():
     against = input("What type is your cat good against? ").title()
     cursor = db.cursor()
@@ -40,11 +45,15 @@ def print_against():
     for Cat in result:
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
-
+"""
 #Fuction that ask the user rarity, against and banner.
 def this_does_everything():
     Rarity = input("What rarity is your cat? ").title()
+    while Rarity not in Rarity_Type:
+        Rarity += input("What type is your cat good against? ").title()
     against = input("What type is your cat good against? ").title()
+    while against not in Trait:
+        against += input("What type is your cat good against? ").title()
     Banner = input("What banner is your cat from? ").title()
     cursor = db.cursor()
     sql = 'SELECT * FROM Cat WHERE Cat_Rarity = ? AND Cat_against = ? AND Banner = ?;'
@@ -58,23 +67,16 @@ def this_does_everything():
 
 while True:
     #A menu that display what to do
-    print("\nWhat would you like to do?")
     print("1. Display all data")
-    print("2. Display Legend Rare cats")
-    print("3. Certin type")
-    print("4. This does everything")
-    print("5. Exit")
-    user_input = input("Enter a number (1-5): ")
+    print("2. This does everything")
+    print("3. Exit")
+    user_input = input("Enter a number (1-3): ")
 
     if user_input == "1":
         print_all()
     elif user_input == "2":
-        print_legend_rare()
-    elif user_input == "3":
-        print_against()
-    elif user_input == "4":
         this_does_everything()
-    elif user_input == "5":
+    elif user_input == "3":
         print("Exiting the program.")
         break
     else:
