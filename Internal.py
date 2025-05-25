@@ -48,16 +48,21 @@ def print_against():
 """
 #Fuction that ask the user rarity, against and banner.
 def this_does_everything():
-    Rarity = input("What rarity is your cat? ").title()
-    while Rarity not in Rarity_Type:
-        Rarity += input("What type is your cat good against? ").title()
-    against = input("What type is your cat good against? ").title()
-    while against not in Trait:
-        against += input("What type is your cat good against? ").title()
-    Banner = input("What banner is your cat from? ").title()
+    while True:
+        Rarity = input("What rarity is your cat? ").title()
+        if Rarity in Rarity_Type:
+            break
+        else:
+            Rarity = input("What rarity is your cat? ").title()
+    while True:
+        against = input("What type is your cat good against? ").title()
+        if against in Trait:
+            break
+        else:
+            Rarity = input("What rarity is your cat? ").title()
     cursor = db.cursor()
-    sql = 'SELECT * FROM Cat WHERE Cat_Rarity = ? AND Cat_against = ? AND Banner = ?;'
-    cursor.execute(sql, (Rarity, against, Banner))
+    sql = 'SELECT * FROM Cat WHERE Cat_Rarity = ? AND Cat_against = ?;'
+    cursor.execute(sql, (Rarity, against))
     result = cursor.fetchall()
     print_header()
     for Cat in result:
@@ -71,7 +76,6 @@ while True:
     print("2. This does everything")
     print("3. Exit")
     user_input = input("Enter a number (1-3): ")
-
     if user_input == "1":
         print_all()
     elif user_input == "2":
