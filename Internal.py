@@ -2,6 +2,20 @@ import sqlite3
 db = sqlite3.connect('internal.db')
 Trait = ["Red", "Alien", "Black", "Traitless", "Non-Metal", "Floating", "Angel", "All", "Metal", "Zombies", "Aku"]
 Rarity_Type = ["Legend Rare", "Uber Rare"]
+cat_banner = [
+    "Tales of the Nekoluga",
+    "Ancient Heroes Ultra Souls",
+    "Girls & Monsters: Angels of Terror",
+    "Lords of Destruction Dragon Emperors",
+    "Frontline Assault Iron Legion",
+    "Dark Heroes",
+    "Nature's Guardians Elemental Pixies",
+    "Sengoku Wargods Vajiras",
+    "The Almighties The Majestic Zeus",
+    "The Dynamites",
+    "UBERFEST",
+    "EPICFEST"
+]
 
 #Function that print every data
 
@@ -86,15 +100,31 @@ def search():
             break  
         else:
             print("No cat found with that name. Please try again.")
-    
+
     db.close()
+def banner():
+    i = 1
+    for group in cat_banner:
+        print(str(i) + ". " + group)
+        i += 1
+    Banner = input("Which banner(1-12): ")
+    cursor = db.cursor()
+    sql = 'SELECT * FROM Cat WHERE Banner = ?;'
+    cursor.execute(sql,(Banner,))
+    result = cursor.fetchall()
+    print_header()
+    for Cat in result:
+        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
+    db.close()
+    
 while True:
     #A menu that display what to do
     print("1. Display all data")
     print("2. Sort data by rarity and type")
     print("3. Search for cat's data")
+    print("4. Print the banner only")
     print("4. Exit")
-    user_input = input("Enter a number (1-3): ")
+    user_input = input("Enter a number (1-4): ")
     if user_input == "1":
         print_all()
     elif user_input == "2":
@@ -102,6 +132,8 @@ while True:
     elif user_input == "3":
         search()
     elif user_input == "4":
+        banner()
+    elif user_input == "5":
         print("Exiting the program.")
         break
     else:
