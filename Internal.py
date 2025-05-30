@@ -82,14 +82,15 @@ def Rarirty_and_type():
     print_header()
     for Cat in result:
         print(f"\n{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
-    db.close()
-
+    
+#a search function that ask the user the cat name and display the data
 def search():
-    cursor = db.cursor()
+   
     sql = 'SELECT * FROM Cat WHERE Cat_Name = ?;'
 
     while True:
         user_cat = input("Cat name: ").title()
+        cursor = db.cursor()
         cursor.execute(sql, (user_cat,))
         result = cursor.fetchall()
 
@@ -101,21 +102,30 @@ def search():
         else:
             print("No cat found with that name. Please try again.")
 
-    db.close()
+
+#Display the cat from specfic banner
 def banner():
     i = 1
     for group in cat_banner:
-        print(str(i) + ". " + group)
-        i += 1
+            print(str(i) + ". " + group)
+            i += 1
     Banner = input("Which banner(1-12): ")
-    cursor = db.cursor()
-    sql = 'SELECT * FROM Cat WHERE Banner = ?;'
-    cursor.execute(sql,(Banner,))
-    result = cursor.fetchall()
-    print_header()
-    for Cat in result:
-        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
-    db.close()
+    banner_num = int(Banner) - 1
+    if Banner.isdigit():
+        if 0 <= banner_num < len(cat_banner):
+            slected_banner = cat_banner[banner_num]
+            cursor = db.cursor()
+            sql = 'SELECT * FROM Cat WHERE Banner = ?;'
+            cursor.execute(sql,(slected_banner,))
+            result = cursor.fetchall()
+            print_header()
+            for Cat in result:
+                print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
+        
+        else:
+            print("Number is out of range")
+    else:
+        print('That was not a options')
     
 while True:
     #A menu that display what to do
@@ -123,8 +133,8 @@ while True:
     print("2. Sort data by rarity and type")
     print("3. Search for cat's data")
     print("4. Print the banner only")
-    print("4. Exit")
-    user_input = input("Enter a number (1-4): ")
+    print("5. Exit")
+    user_input = input("Enter a number (1-5): ")
     if user_input == "1":
         print_all()
     elif user_input == "2":
