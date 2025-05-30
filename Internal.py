@@ -35,33 +35,10 @@ def print_all():
         print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
     db.close()
 
-#Function that print Legend Rare only
-"""
-def print_legend_rare():
-    cursor = db.cursor()
-    sql = 'SELECT * FROM Cat WHERE Cat_Rarity = "Legend Rare";'
-    cursor.execute(sql)
-    result = cursor.fetchall()
-    print_header()
-    for Cat in result:
-        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
-    db.close()
-"""
-#Function that ask the user and display the type 
-"""r
-def print_against():
-    against = input("What type is your cat good against? ").title()
-    cursor = db.cursor()
-    sql = 'SELECT * FROM Cat WHERE Cat_Against = ?;'
-    cursor.execute(sql, (against,))
-    result = cursor.fetchall()
-    print_header()
-    for Cat in result:
-        print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
-    db.close()
-"""
+
 #Fuction that ask the user rarity, against and banner.
 def Rarirty_and_type():
+    db = sqlite3.connect('internal.db')
     while True:
         Rarity = input("What rarity is your cat? ").title()
         if Rarity in Rarity_Type:
@@ -82,10 +59,10 @@ def Rarirty_and_type():
     print_header()
     for Cat in result:
         print(f"\n{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
-    
+    db.close()
 #a search function that ask the user the cat name and display the data
 def search():
-   
+    db = sqlite3.connect('internal.db')
     sql = 'SELECT * FROM Cat WHERE Cat_Name = ?;'
 
     while True:
@@ -102,7 +79,7 @@ def search():
         else:
             print("No cat found with that name. Please try again.")
 
-
+    db.close()
 #Display the cat from specfic banner
 def banner():
     i = 1
@@ -121,7 +98,7 @@ def banner():
             print_header()
             for Cat in result:
                 print(f"{Cat[0]:<25}{Cat[1]:<15}{Cat[2]:<15}{Cat[3]:<15}{Cat[4]:<15}{Cat[5]:<15}")
-        
+ 
         else:
             print("Number is out of range")
     else:
